@@ -18,12 +18,12 @@ public class StaffServiceImpl implements StaffService {
     @Resource
     private StaffRepository staffRepository;
 
-    @Override
+
     public Staff find(Integer id) {
         return staffRepository.findOne(id);
     }
 
-    @Override
+
     public Staff create(Staff staff) {
         return staffRepository.save(staff);
     }
