@@ -1,13 +1,13 @@
 package com.sedi.controller;
 
 import com.sedi.entity.Student;
-import com.sedi.model.ExceptionCode;
+import com.sedi.constant.ExceptionCode;
+import com.sedi.exception.InvalidOperatorException;
 import com.sedi.service.StudentService;
 import com.sedi.model.ResultModel;
 import org.apache.commons.lang3.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -16,19 +16,29 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/students")
-public class StudentController {
+public class StudentController extends BaseController {
 
     @Autowired
     private StudentService studentService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Student create(@RequestBody Student student) {
+    public Student create(@RequestParam("userName") String userName,
+                          @RequestParam(value = "password", defaultValue = "888888", required = false) String password,
+                          @RequestParam(value = "email", required = false) String email,
+                          @RequestBody(required = false) Student student) {
+        Validate.notNull(userName, "The userName must not be null");
+        logger.debug(String.format("create student by userName [%s], password [%s]", userName, password));
 
-        System.out.println(student.getUserName());
+        //验证用户名是否存在（或有效性验证）
+        if(!studentService.isValidUserName(userName)) {
+            throw new InvalidOperatorException("用户名已存在，无效");
+        }
 
-        student = studentService.create(student);
+        Student saveStu = new Student(userName, password, email);
 
-        return student;
+        saveStu = studentService.create(saveStu);
+
+        return saveStu;
     }
 
     @RequestMapping(method = RequestMethod.GET)

@@ -15,14 +15,15 @@ import java.util.List;
  */
 @Component("studentService")
 @Scope("prototype")
-public class StudentServiceImpl implements StudentService{
+public class StudentServiceImpl extends BaseService implements StudentService{
 
     @Resource
     private StudentRepository studentRepository;
 
-    public Student create(Student student) {
+    public Student create(Student created) {
+        logger.debug("creating a new student with information: " + created);
 
-        return studentRepository.save(student);
+        return studentRepository.save(created);
     }
 
     public List<Student> getAll() {
@@ -57,5 +58,22 @@ public class StudentServiceImpl implements StudentService{
         student = studentRepository.save(student);
 
         return student;
+    }
+
+    public boolean isValidUserName(String userName) {
+        boolean result = Boolean.TRUE;
+
+        if(this.findByUserName(userName) != null) {
+            result = Boolean.FALSE;
+        }
+
+        return result;
+    }
+
+    private Student findByUserName(String userName) {
+        Validate.notNull(userName, "can't find student, userName must be not null");
+        logger.debug(String.format("find student by userName [%s]", userName));
+
+        return studentRepository.findByUserName(userName);
     }
 }

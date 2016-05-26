@@ -1,4 +1,4 @@
-package com.sedi.model;
+package com.sedi.constant;
 
 /**
  * Created by csw on 2016/5/25.

@@ -19,6 +19,14 @@
 
 	<mvc:annotation-driven>
 		<mvc:message-converters register-defaults="true">
+
+			<bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter">
+
+			</bean>
+			<bean class="org.springframework.http.converter.FormHttpMessageConverter">
+				
+			</bean>
+
 			<!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
 		    	<constructor-arg value="UTF-8" />
@@ -26,9 +34,18 @@
 			<!-- 将Jackson2HttpMessageConverter的默认格式化输出设为true -->
 			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="prettyPrint" value="true"/>
-            </bean>			
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html;charset=UTF-8</value>
+						<value>text/plain;charset=UTF-8</value>
+						<value>application/json;charset=utf-8</value>
+						<value>text/javascript;charset=utf-8</value>
+					</list>
+				</property>
+            </bean>
   		</mvc:message-converters>
 	</mvc:annotation-driven>
+
 
 	<!-- 视图解释类 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

@@ -18,4 +18,6 @@ public interface StudentService {
     Student updateStudentInfo(Student updateStu);
 
     Student deleteStudent(Integer id);
+
+    boolean isValidUserName(String userName);
 }

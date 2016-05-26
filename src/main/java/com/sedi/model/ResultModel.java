@@ -1,5 +1,7 @@
 package com.sedi.model;
 
+import com.sedi.constant.ExceptionCode;
+
 /**
  * Created by csw on 2016/5/25.
  * annotation：结果模板
