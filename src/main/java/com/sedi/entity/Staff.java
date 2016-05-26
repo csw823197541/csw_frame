@@ -26,6 +26,9 @@ public class Staff implements Serializable{
 	@Column(nullable = true)
 	private boolean enabled;
 	private String remark;
+
+	@Column(name = "is_delete")
+	private boolean isDelete;
 	
 	public Staff() {
 		
@@ -118,7 +121,13 @@ public class Staff implements Serializable{
 
 	public void setRemark(String remark) {
 		this.remark = remark;
-	}	
-	
-	
+	}
+
+	public boolean isDelete() {
+		return isDelete;
+	}
+
+	public void setIsDelete(boolean isDelete) {
+		this.isDelete = isDelete;
+	}
 }

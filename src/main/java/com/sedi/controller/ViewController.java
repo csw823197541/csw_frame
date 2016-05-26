@@ -23,4 +23,13 @@ public class ViewController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/goBootStrapUI", method = RequestMethod.GET)
+    public ModelAndView goBootStrapUI() {
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/bootStrapUI");
+
+        return modelAndView;
+    }
+
 }

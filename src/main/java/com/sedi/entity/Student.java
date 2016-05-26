@@ -1,43 +1,54 @@
 package com.sedi.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.codehaus.jackson.annotate.JsonProperty;
 
-/**
- * Student entity. @author MyEclipse Persistence Tools
- */
+import javax.persistence.*;
+import static javax.persistence.GenerationType.IDENTITY;
+import java.io.Serializable;
+
+
 @Entity
 @Table(name = "student", catalog = "csw_frame")
-public class Student implements java.io.Serializable {
+public class Student implements Serializable {
 
-	// Fields
-
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
+	@JsonProperty("id")
 	private Integer id;
+
+	@JsonProperty("user_name")
+	@Column(name = "userName", length = 128)
 	private String userName;
+
+	@JsonProperty("password")
+	@Column(name = "password", length = 20)
 	private String password;
+
+	@JsonProperty("email")
+	@Column(name = "email", length = 128)
 	private String email;
 
-	// Constructors
+	@Column(name = "is_delete", nullable = false)
+	@JsonProperty("is_delete")
+	private boolean isDelete = false;
 
-	/** default constructor */
 	public Student() {
 	}
 
-	/** full constructor */
 	public Student(String userName, String password, String email) {
 		this.userName = userName;
 		this.password = password;
 		this.email = email;
 	}
 
-	// Property accessors
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
+	public Student(String userName, String password, String email, boolean isDelete) {
+		this.userName = userName;
+		this.password = password;
+		this.email = email;
+		this.isDelete = isDelete;
+	}
+
 	public Integer getId() {
 		return this.id;
 	}
@@ -46,7 +57,6 @@ public class Student implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "userName", length = 128)
 	public String getUserName() {
 		return userName;
 	}
@@ -55,7 +65,6 @@ public class Student implements java.io.Serializable {
 		this.userName = userName;
 	}
 
-	@Column(name = "password", length = 20)
 	public String getPassword() {
 		return password;
 	}
@@ -64,7 +73,6 @@ public class Student implements java.io.Serializable {
 		this.password = password;
 	}
 
-	@Column(name = "email", length = 128)
 	public String getEmail() {
 		return this.email;
 	}
@@ -73,4 +81,23 @@ public class Student implements java.io.Serializable {
 		this.email = email;
 	}
 
+	public boolean isDelete() {
+		return isDelete;
+	}
+
+	public void setIsDelete(boolean isDelete) {
+		this.isDelete = isDelete;
+	}
+
+	public Student changeInfo(Student student) {
+
+		if(student != null) {
+			student.setUserName(this.userName);
+			student.setPassword(this.password);
+			student.setEmail(this.email);
+			student.setIsDelete(this.isDelete);
+		}
+
+		return student;
+	}
 }

@@ -10,5 +10,12 @@ import java.util.List;
 public interface StudentService {
 
     Student create(Student student);
+
     List<Student> getAll();
+
+    Student findOne(Integer id);
+
+    Student updateStudentInfo(Student updateStu);
+
+    Student deleteStudent(Integer id);
 }
