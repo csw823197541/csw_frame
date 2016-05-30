@@ -1,4 +1,4 @@
-package com.sedi.exception;
+package com.sedi.model;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 

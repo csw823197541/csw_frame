@@ -5,6 +5,7 @@ import com.sedi.constant.ExceptionCode;
 import com.sedi.exception.InvalidOperatorException;
 import com.sedi.service.StudentService;
 import com.sedi.model.ResultModel;
+import com.sedi.utils.ValidateUtil;
 import org.apache.commons.lang3.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class StudentController extends BaseController {
 
         //验证用户名是否存在（或有效性验证）
         if(!studentService.isValidUserName(userName)) {
-            throw new InvalidOperatorException("用户名已存在，无效");
+            throw new InvalidOperatorException("用户名无效，已存在");
         }
 
         Student saveStu = new Student(userName, password, email);
@@ -51,7 +52,11 @@ public class StudentController extends BaseController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Student findStudent(@PathVariable Integer id) {
         Validate.notNull(id, "can't find student, id is null");
+        logger.debug(String .format("find  student inform by id [%d]", id));
+
         Student student = studentService.findOne(id);
+
+        ValidateUtil.notNullStudentValidate(student);
 
         return student;
     }

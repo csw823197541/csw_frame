@@ -2,8 +2,7 @@ package com.sedi.controller;
 
 import com.sedi.component.BaseComponent;
 import com.sedi.constant.ErrorCode;
-import com.sedi.exception.ErrorModel;
-import org.codehaus.jackson.JsonParseException;
+import com.sedi.model.ErrorModel;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -73,6 +72,12 @@ public abstract class BaseController extends BaseComponent {
         return errorModel;
     }
 
+    /**
+     * happened something unknown exception
+     * @param ex
+     * @param httpServletResponse
+     * @return
+     */
     @ExceptionHandler(Exception.class)
     public ErrorModel handleException(Exception ex,
                                       HttpServletResponse httpServletResponse) {
