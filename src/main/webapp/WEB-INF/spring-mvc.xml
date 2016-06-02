@@ -57,6 +57,7 @@
 
 	<!-- 对静态资源文件的访问-->
 	<mvc:resources mapping="/images/**" location="/WEB-INF/images/" cache-period="31556926"/>
+	<mvc:resources mapping="/fonts/**" location="/WEB-INF/fonts/" cache-period="31556926"/>
 	<mvc:resources mapping="/js/**" location="/WEB-INF/js/" cache-period="31556926"/>
 	<mvc:resources mapping="/css/**" location="/WEB-INF/css/" cache-period="31556926"/>
 	<mvc:resources mapping="/themes/**" location="/WEB-INF/themes/" cache-period="31556926"/>

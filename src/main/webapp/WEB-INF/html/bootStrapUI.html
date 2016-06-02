@@ -1,52 +1,215 @@
 ﻿<!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>Bootstrap 101 Template</title>
+    <title>Bootstrap测试页面</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 
-	<!-- 可选的Bootstrap主题文件（一般不用引入） -->
-	<link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap-table.css">
 
-	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-	<script src="../js/jquery.min.js" type="text/javascript"></script>
+    <!-- 可选的Bootstrap主题文件（一般不用引入）-->
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
 
-	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-	<script src="../js/bootstrap.min.js" type="text/javascript"></script>
-	
-	<script>
-	   $(function() { 
-		  $(".btn").click(function(){
-			         
-		  });
-	   });
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="../js/jquery.min.js" type="text/javascript"></script>
 
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="../js/bootstrap.min.js" type="text/javascript"></script>
 
-	</script>
-	
-  </head>
-  <body>
-    <h1>你好，世界！</h1>
-    <span class="label label-success">Success</span>
-	<button id="fat-bt" class="btn btn-primary" data-loading-text="Loading..." 
-			type="button">加载数据</button>
+    <!-- BootStrap-table文件，不可少-->
+    <script src="../js/bootstrap-table.js" type="text/javascript"></script>
 
-	<div>
-		<table id="dg_userList" class="table" data-toggle = "table" data-pagination = "true" data-striped = "true">
-			<thead>
-				<tr>
-					<th data-field = "state" data-radio = "true"></th>
-					<th data-field = "userName"></th>
-					<th data-field = "password"></th>
-					<th data-field = "email"></th>
-				</tr>
-			</thead>
-		</table>
-	</div>
-  </body>
+    <!-- 国际化，表格汉化 -->
+    <script src="http://cdn.bootcss.com/bootstrap-table/1.9.1/locale/bootstrap-table-zh-CN.min.js"></script>
+
+    <script>
+        //        $(function () {
+        //            $(".btn").click(function () {
+        ////			   initData();
+        //
+        //            });
+        //
+        //
+        //            function initData() {
+        //                $.ajax({
+        //                    url: 'http://localhost:8080/api/students',
+        //                    dataType: 'json',
+        //                    type: 'get',
+        //                    success: function (data) {
+        ////					   alert("请求成功");
+        ////					   alert(data);
+        //                        var jsonData = eval(data);
+        ////					   alert(jsonData);
+        ////					   for(var i = 0; i < jsonData.length; i++) {
+        ////						   var jj = JSON.stringify(jsonData[i]);
+        ////						   alert(jj);
+        ////						   $('#table').bootstrapTable('load', jj);
+        ////					   }
+        //                        var total = jsonData.length;	//信息总数
+        ////					   alert(total);
+        //                        if (total == 0) {
+        //                            $('#table').bootstrapTable('load', $.parseJSON("[]"));
+        //                        } else {
+        //                            $('#table').bootstrapTable('load', data);
+        //                        }
+        //                    }
+        //                });
+        //            }
+        //        });
+    </script>
+
+</head>
+<body>
+<!--
+<button id="fat-bt" class="btn btn-primary" type="button">加载数据</button>
+-->
+<!--data-toggle="table" data-url = "http://localhost:8080/api/students" datatype="json"
+data-detail-formatter="detailFormatter"
+data-response-handler="responseHandler"
+data-show-footer="false"
+data-side-pagination="server"
+-->
+<div class="container">
+    <div id="toolbar">
+        <button id="remove" class="btn btn-danger" disabled>
+            <i class="glyphicon glyphicon-remove"></i> Delete
+        </button>
+    </div>
+    <table id="table"
+           class="table table-hover table-bordered"
+
+           data-toolbar="#toolbar"
+           data-search="true"
+           data-show-refresh="true"
+           data-show-toggle="true"
+           data-show-columns="true"
+           data-show-export="true"
+           data-detail-view="true"
+           data-detail-formatter="detailFormatter"
+           data-minimum-count-columns="2"
+           data-show-pagination-switch="true"
+           data-pagination="true"
+           data-id-field="id"
+           data-page-list="[5, 10, 25, 50, ALL]"
+
+           data-url="http://localhost:8080/api/students"
+           datatype="json"
+           data-local="zh-US"
+            >
+
+    </table>
+</div>
+
+<script>
+
+    $(function () {
+        var $table = $('#table');
+        var $remove = $('#remove');
+        var selections = [];
+        $table.bootstrapTable({
+            height: getHeight(),
+            columns: [{
+                field: 'state',
+                checkbox: true,
+                align: 'center',
+                valign: 'middle'
+            }, {
+                title: 'ID',
+                field: 'id',
+                align: 'center',
+                sortable: true,
+                footerFormatter: totalTextFormatter
+            }, {
+                title: '用户名',
+                field: 'userName',
+                align: 'center',
+                footerFormatter: totalNameFormatter
+            }, {
+                title: '密码',
+                field: 'password',
+                align: 'center',
+                footerFormatter: totalNameFormatter
+            }, {
+                title: '邮箱',
+                field: 'email',
+                align: 'center',
+                footerFormatter: totalNameFormatter
+            }, {
+                title: '状态',
+                field: 'delete',
+                align: 'center',
+                footerFormatter: totalNameFormatter
+            }]
+        });
+
+        setTimeout(function () {
+            $table.bootstrapTable('resetView');
+        }, 200);
+        $table.on('check.bs.table uncheck.bs.table ' +
+                'check-all.bs.table uncheck-all.bs.table', function () {
+            $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
+
+            // save your data, here just save the current page
+            selections = getIdSelections();
+            // push or splice the selections if you want to save all data selections
+        });
+        $table.on('expand-row.bs.table', function (e, index, row, $detail) {
+            if (index % 2 == 1) {
+                $detail.html('Loading from ajax request...');
+                $.get('LICENSE', function (res) {
+                    $detail.html(res.replace(/\n/g, '<br>'));
+                });
+            }
+        });
+        $table.on('all.bs.table', function (e, name, args) {
+            console.log(name, args);
+        });
+        $remove.click(function () {
+            var ids = getIdSelections();
+            $table.bootstrapTable('remove', {
+                field: 'id',
+                values: ids
+            });
+            $remove.prop('disabled', true);
+        });
+        $(window).resize(function () {
+            $table.bootstrapTable('resetView', {
+                height: getHeight()
+            });
+        });
+
+        function getIdSelections() {
+            return $.map($table.bootstrapTable('getSelections'), function (row) {
+                return row.id
+            });
+        }
+
+        function detailFormatter(index, row) {
+            var html = [];
+            $.each(row, function (key, value) {
+                html.push('<p><b>' + key + ':</b> ' + value + '</p>');
+            });
+            return html.join('');
+        }
+
+        function totalTextFormatter(data) {
+            return 'Total';
+        }
+
+        function totalNameFormatter(data) {
+            return data.length;
+        }
+
+        function getHeight() {
+            return $(window).height() - $('h1').outerHeight(true);
+        }
+    });
+</script>
+
+</body>
 </html>

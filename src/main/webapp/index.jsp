@@ -23,10 +23,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <a href="">立即注册</a>
     <a href="/api/goUserInfo">框架页面</a>
     <a href="/api/goBootStrapUI">bootStrap测试页面</a>
-    <form action="/api/staffs" method="post">
-        <input id="name" name="name" value="张三"/><br/>
-        <input id="password" name="password" value="123456"/><br/>
-        <input type="submit" value="提交"/>
-    </form>
   </body>
 </html>
